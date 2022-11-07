@@ -1,13 +1,13 @@
 # https://leetcode.com/problems/add-two-numbers/
 
-from typing import Optional
+from typing import Optional, List
 
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
 
-class Solution:
+class Solution1:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         return self.addTwoNumber(l1, l2, 0)
     
@@ -23,14 +23,31 @@ class Solution:
         current.next = self.addTwoNumber(l1.next if l1 else l1, l2.next if l2 else l2, s // 10)
         return current
 
-def createListNode(l: list[int], cur: int) -> ListNode:
+class Solution2:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummyHead = ListNode()
+        cur = dummyHead
+        carry = 0
+        while l1 or l2 or carry > 0:
+            n1 = l1.val if l1 else 0
+            n2 = l2.val if l2 else 0
+            s = n1 + n2 + carry
+            nextNode = ListNode(s % 10)
+            carry = s // 10
+            cur.next = nextNode
+            cur = cur.next
+            l1 = l1.next if l1 else l1
+            l2 = l2.next if l2 else l2
+        return dummyHead.next
+
+def createListNode(l: List[int], cur: int) -> ListNode:
     if cur >= len(l):
         return None
     curNode = ListNode(l[cur])
     curNode.next = createListNode(l, cur + 1)
     return curNode
 
-def createListNodes(l: list[int]) -> ListNode:
+def createListNodes(l: List[int]) -> ListNode:
     return createListNode(l, 0)
 
 def printAns(l: ListNode) -> None:
@@ -41,6 +58,6 @@ def printAns(l: ListNode) -> None:
 if __name__ == "__main__":
     l1 = createListNodes([2, 4, 3])
     l2 = createListNodes([5, 6, 4])
-    s = Solution()
+    s = Solution2()
     result = s.addTwoNumbers(l1, l2)
     printAns(result)
