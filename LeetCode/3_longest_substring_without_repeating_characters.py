@@ -38,3 +38,17 @@ class Solution2:
             existed.discard(s[i])
             i += 1
         return res
+
+# TC: O(n)
+# SC: O(n)
+class Solution3:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        res = 0
+        mp = {}
+        i = 0
+        for j in range(len(s)):
+            if s[j] in mp:
+                i = max(mp[s[j]], i)
+            res = max(res, j - i + 1)
+            mp[s[j]] = j + 1
+        return res
