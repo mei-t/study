@@ -1,6 +1,10 @@
 from typing import List
 
-class Solution:
+# m = len(board)
+# n = len(board[0])
+# TC: O(m * n * 3 ^ l)
+# SC: O(max(m * n, l))
+class Solution1:
     def exist(self, board: List[List[str]], word: str) -> bool:
         for i in range(len(board)):
             for j in range(len(board[0])):
@@ -28,7 +32,46 @@ class Solution:
         visited[i][j] = False
         return False
 
+# m = len(board)
+# n = len(board[0])
+# l = len(word)
+# TC: O(m * n * 3 ^ l)
+# SC: O(l)
+class Solution2:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        self.ROWS = len(board)
+        self.COLS = len(board[0])
+        self.board = board
+        for i in range(self.ROWS):
+            for j in range(self.COLS):
+                if self.search(word, i, j):
+                    return True
+        
+        return False
+    
+    def search(self, suffix: str, row: int, col: int) -> bool:
+        if len(suffix) == 0:
+            return True
+        if row < 0 or row >= self.ROWS or col < 0 or col >= self.COLS or self.board[row][col] != suffix[0]:
+            return False
+        self.board[row][col] = '#'
+        for rowOffset, colOffset in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+            res = self.search(suffix[1:], row + rowOffset, col + colOffset)
+            if res: break
+        self.board[row][col] = suffix[0]
+        return res
+
 if __name__ == '__main__':
-    sol = Solution()
+    sol = Solution2()
     # print(sol.exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "ABCCED"))
     print(sol.exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "SEE"))
+    print(sol.exist(
+        [
+            ["A","A","A","A","A","A"],
+            ["A","A","A","A","A","A"],
+            ["A","A","A","A","A","A"],
+            ["A","A","A","A","A","A"],
+            ["A","A","A","A","A","A"],
+            ["A","A","A","A","A","A"]
+        ],
+        "AAAAAAAAAAAABAA"))
