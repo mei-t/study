@@ -118,3 +118,47 @@ class MinStack3:
 
     def getMin(self) -> int:
         return self.minStack[-1]
+
+
+# SC: O(n)
+# __init__()
+#   TC:O(1)
+# push()
+#   TC:O(1)
+# pop()
+#   TC:O(1)
+# top()
+#   TC:O(1)
+# getMin()
+#   TC:O(1)
+# stackに何もない場合のtop()、getMin()の挙動は定義されていない。
+class MinStack4:
+
+    def __init__(self):
+        self.stack = []
+        self.minStack = []
+        
+
+    def push(self, val: int) -> None:
+        self.stack.append(val)
+        if len(self.minStack) == 0 or val < self.minStack[-1][0]:
+            self.minStack.append([val,1])
+        elif val == self.minStack[-1][0]:
+            self.minStack[-1][1] += 1
+        
+
+    def pop(self) -> None:
+        val = self.stack.pop()
+        if val == self.minStack[-1][0]:
+            self.minStack[-1][1] -= 1
+        if self.minStack[-1][1] == 0:
+            self.minStack.pop()
+        
+
+    def top(self) -> int:
+        return self.stack[-1]
+        
+
+    def getMin(self) -> int:
+        return self.minStack[-1][0]
+        
