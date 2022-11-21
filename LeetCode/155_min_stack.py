@@ -54,7 +54,7 @@ class MinStack1:
 #   TC:O(1)
 # getMin()
 #   TC:O(1)
-# stackに何もない場合のpop()、top()の挙動は定義されていない。
+# stackに何もない場合のtop()、getMin()の挙動は定義されていない。
 class MinStack2:
 
     def __init__(self):
