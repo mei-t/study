@@ -13,7 +13,7 @@ import heapq
 # getMin()
 #   TC:O(1) ave
 #      O(n) worst
-class MinStack:
+class MinStack1:
 
     def __init__(self):
         self.stack = deque()
@@ -41,3 +41,41 @@ class MinStack:
             heapq.heappop(self.minStack)
             val = self.minStack[0]
         return val
+
+
+# SC: O(n)
+# __init__()
+#   TC:O(1)
+# push()
+#   TC:O(1)
+# pop()
+#   TC:O(1)
+# top()
+#   TC:O(1)
+# getMin()
+#   TC:O(1)
+# stackに何もない場合のpop()、top()の挙動は定義されていない。
+class MinStack2:
+
+    def __init__(self):
+        self.stack = deque()
+        
+
+    def push(self, val: int) -> None:
+        if len(self.stack) > 0:
+            minVal = min(val, self.stack[-1][1])
+        else:
+            minVal = val
+        self.stack.append([val, minVal])
+        
+
+    def pop(self) -> None:
+        self.stack.pop()
+        
+
+    def top(self) -> int:
+        return self.stack[-1][0]
+        
+
+    def getMin(self) -> int:
+        return self.stack[-1][1]
