@@ -6,6 +6,10 @@ class courseNode:
         self.nexts = []
         self.prevs = 0
 
+# N = numCourses
+# R = len(prerequisites)
+# TC: O(N + R) (while文の中では各courseに対して1回だけ処理が行われている)
+# SC: O(N + R)
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         firstCandi = {i for i in range(numCourses)}
