@@ -5,12 +5,13 @@ class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         firstCandi = {i for i in range(numCourses)}
         nextMap = defaultdict(set)
-        preMap = defaultdict(set)
+        prevs = [0] * numCourses
         
         for pair in prerequisites:
-            firstCandi.discard(pair[1])
-            nextMap[pair[0]].add(pair[1])
-            preMap[pair[1]].add(pair[0])
+            nextCourse, prevCourse = pair[0], pair[1]
+            firstCandi.discard(nextCourse)
+            nextMap[prevCourse].add(nextCourse)
+            prevs[nextCourse] += 1
         
         curs = firstCandi
         visited = set()
@@ -19,8 +20,8 @@ class Solution:
             for i in curs:
                 visited.add(i)
                 for j in nextMap[i]:
-                    preMap[j].discard(i)
-                    if len(preMap[j]) == 0:
+                    prevs[j] -= 1
+                    if prevs[j] == 0:
                         nexts.add(j)
             curs = nexts
         
