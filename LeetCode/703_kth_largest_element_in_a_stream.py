@@ -1,8 +1,11 @@
 import heapq
 from typing import List
 
+# 28:12
+# SC: O(k)
 class KthLargest:
 
+    # TC: O(nlogk)
     def __init__(self, k: int, nums: List[int]):
         self.heapq = []
         self.k = k
@@ -14,15 +17,13 @@ class KthLargest:
             else:
                 heapq.heappush(self.heapq, num)
 
+    # TC: O(logk)
     def add(self, val: int) -> int:
         if len(self.heapq) < self.k:
-            res = heapq.heappushpop(self.heapq, val)
-            heapq.heappush(self.heapq, res)
-            return res
-        heapq.heappushpop(self.heapq, val)
-        res = heapq.heappop(self.heapq)
-        heapq.heappush(self.heapq, res)
-        return res
+            heapq.heappush(self.heapq, val)
+        else:
+            heapq.heappushpop(self.heapq, val)
+        return self.heapq[0]
         
 
 
