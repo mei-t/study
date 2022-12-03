@@ -18,11 +18,18 @@ class KthLargest:
                 heapq.heappush(self.heapq, num)
 
     # TC: O(logk)
-    def add(self, val: int) -> int:
+    def add1(self, val: int) -> int:
         if len(self.heapq) < self.k:
             heapq.heappush(self.heapq, val)
         else:
             heapq.heappushpop(self.heapq, val)
+        return self.heapq[0]
+    
+    # TC: O(logk)
+    def add2(self, val: int) -> int:
+        heapq.heappush(self.heapq, val)
+        if len(self.heapq) > self.k:
+            heapq.heappop(self.heapq)
         return self.heapq[0]
         
 
