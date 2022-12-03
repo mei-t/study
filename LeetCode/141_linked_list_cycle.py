@@ -7,6 +7,7 @@ class ListNode:
 
 # TC: O(n)
 # SC: O(n)
+# 6:50
 class Solution1:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         cur = head
