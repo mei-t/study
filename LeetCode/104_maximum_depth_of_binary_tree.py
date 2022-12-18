@@ -11,7 +11,7 @@ class TreeNode:
 # N is the number of nodes.
 # TC: O(N)
 # SC: O(N) (balanced treeの時、SCの最大値はleafの数になる。この時N/2となるためSCはO(N)。)
-class Solution:
+class Solution1:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         nodes = [root] if root else None
         res = 0
@@ -24,3 +24,21 @@ class Solution:
             nodes = nextNodes
         
         return res
+
+# N is the number of nodes.
+# TC: O(N)
+# SC: O(logN) (O(N)な気がするので質問にまとめた)
+class Solution2:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        stack = [[1, root]]
+        depth = 0
+        while stack != []:
+            cur_d, node = stack.pop()
+            if node != None:
+                depth = max(cur_d, depth)
+                stack.append([cur_d + 1, node.left])
+                stack.append([cur_d + 1, node.right])
+        
+        return depth
